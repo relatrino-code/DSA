@@ -184,7 +184,7 @@ int main (){
     print_list(ls);
     ls.emplace_front(54);
     print_list(ls);
-    // Backend implementation for a vector is a single linked list while for a list is doubly linked list
+    // Backend implementation for a vector is a dynamic array while for a list is doubly linked list
 
     // Rest all functions are same : begin, end, rbegin, rend, clear, insert, swap, size
     
@@ -277,9 +277,11 @@ int main (){
     // begin(), end(), rbegin(), rend(), size(), empty(), swap() are same as above
     
     auto it = ste.find(1); // returns an iterator that ponts to the memory address of the element
-    auto it1 = ste.find(3); // if the particular element isn't present it returns ste.end()
+    auto it1 = ste.find(7); // if the particular element isn't present it returns ste.end()
+
+    cout << "Hello" << endl;
     
-    cout << *it << " " << *it1 << endl;
+    cout << *it << " " << &it1 << endl;
 
     ste.erase(5);
 
@@ -301,9 +303,9 @@ int main (){
     cout << endl;
 
     // You can also give starts and ends to erase, the end being exclusive
-    auto it3 = ste.find(0);
-    auto it4 = ste.find(1);
-    ste.erase(it3, it4);
+    // auto it3 = ste.find(0);
+    // auto it4 = ste.find(1);
+    // ste.erase(it3, it4);
 
     // Other functions work the same way as vector
 
@@ -316,8 +318,74 @@ int main (){
 
     // MULTISET - A SET THAT STORES DUPLICATES AS WELL
 
-    
+    multiset<int> mse;
+    mse.insert(1);
+    mse.insert(1);
+    mse.insert(1);
+    mse.insert(2);
 
+    cout << "Multiset" << endl;
+
+    for(auto i : mse) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    // mse.erase(1); // Will erase all 1s
+    // cout << mse.count(1) << endl;
+    // mse.erase(1) will delete all 1s but mse.erase(mse.find(1)) deletes the iterator (and hence the element) of just the first 1
+    // If you want to delete two 2s
+
+    auto it01 = mse.find(1);
+    auto it02 = next(it01, 2);
+    mse.erase(it01, it02);
+
+    for(auto i : mse) {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    // UNORDERED SET - A SET THAT STORES ELENTS IN RANDOM ORDER
+    // Almost all operations have O(1) but lower_bound() and upper_bound() don't work
+    
+    unordered_set<int> uste;
+
+    // Worst case complexity would be O(N)
+
+    // MAP - Stores data in the form of key-value pairs
+    map<int, int> mpp;
+    // map<pair<int, int>, int> mpp;
+    // mpp[{2, 4}] = 3;
+    mpp[1] = 2;
+    mpp.emplace(2, 4);
+    mpp.insert({3, 1});
+    mpp.insert({1, 3});
+
+    cout << "Map" << endl;
+    for (auto it : mpp) {
+        cout << it.first << " " << it.second << endl;
+    }
+
+    // Map stores unique keys in sorted order kinda like a set
+
+    cout << mpp[1] << endl;  // 2
+    cout << mpp[5] << endl;  // 0
+
+    auto it_map = mpp.find(3);
+    cout << (*(it_map)).second << endl;  // 1
+
+    auto it_map02 = mpp.find(5);  // points to mpp.end()
+
+    // auto it = mpp.lower_bound(2);
+    // auto it = mpp.upper_bound(3);
+
+    // Rest all functions size, swap, erase, empty work the same
+
+    // MULTIMAP - Everything similar to map, can store duplicate keys
+    // mpp[key] cannot be used here
+
+    // UNORDERED MAP - Same as a map but keys are not stored in sorted order
+    // Map gors for O(log(N)) while Unordered Map goes for O(1) [worst case O(N)]
 
     return 0;
 }
